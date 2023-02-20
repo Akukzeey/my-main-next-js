@@ -1,0 +1,2012 @@
+
+
+
+
+
+
+
+What is Next.js????
+
+-This is a react framework for production
+
+-This is a package is a package that uses react for building user interfaces which is loaded
+ with a lot more features that enable you to build a full fledged production ready applications.
+
+-Those features include routing, styling, authentication, bundle optimization etc and there is no need to install additional packages
+
+
+
+
+
+
+
+
+  ////////////     ROUTES & NAVIGSTION           /////////////
+
+
+
+What are the types of routing in a Next.js app
+
+
+
+
+
+
+
+
+1.Route with Pages
+
+2.Nested routes
+
+3.Dynamic routes
+
+4.Catch-all routes
+
+5.Navigate from UI
+
+6.Programmatically navigate between pages
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Create three nested route that one of the url is localhost3000/blog and the 2 others component which the first component is called first and the url is localhost3000/blog/first and the second component is called second which has a url of localhost3000/blog/second??
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+first we create a new folder in the pages folder and name it how we want the url to read in our instance the folder will be called blog
+
+
+as we know index.js is the root home page in our pages folder so we can create another index.js in our blog folder and index.js will be the root url page
+
+
+Then we just create the two other components which will be first.js and the second.js and the urls will localhost3000/blog/first and localhost3000/blog/second respectively
+
+
+
+
+
+
+
+
+
+
+
+
+??? Create a folder called product inside our pages folder and it has a component of the base url which is localhost3000/product
+
+
+???? In the same folder create another component that helps change the content of the screen on whatever url we put after localhost3000/products
+
+
+???? Also we want the content of the screen to be the same as whatever url we just put on our browser
+
+
+
+
+
+
+
+
+Ans.....
+
+
+
+First we just create the folder called product and add a component of index.js which is our root url
+
+
+function Products() {
+    return (
+        <div>
+            <p>Product 1</p>
+            <p>Product 2</p>
+            <p>Product 3</p>
+        </div>
+    )
+}
+
+export default Products
+
+
+
+
+
+
+
+Second we create another component which we are gonna call with brackets example [productid].js
+
+This will help us navigate to whatever url we type after our base url in our product folder
+
+You simply put it as any name we want it can [id].js or whatever as long it's in brackets
+
+
+
+
+function ProductDetail() {
+    return <h1>Details about product</h1>
+}
+
+
+
+export default ProductDetail
+
+
+
+
+
+
+
+
+To show the content of our screen the same as the url we typed
+
+import {useRouter} from "next/router";   // import useRouter
+
+
+function ProductDetail() {
+    const router=useRouter()
+
+    const productId = router.query.productid     //we add productid the same name as the name of our component
+
+
+    return <h1>Details about product {productId}</h1>   //we call the variable
+}
+
+export default ProductDetail
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+??? Create a catch all routes which the folder is docs and everything we put after that we can show the same content in the screen
+
+??Try and display same url we put after docs on our screen and put an if statement to show if the length is 2 or if the length of the url is 1 or it's more or less than that
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Ans....
+
+First we just make a docs folder inside our pages folder then inside our docs folder we make a component of [...params].js
+
+[...params].js catches all routes we put after docs
+
+
+
+
+
+To display the url first we import (useRouter) we call it inside our app and we console.log it
+
+
+import {useRouter} from "next/router";
+
+function Doc() {
+
+    const router=useRouter()
+
+    const {params=[]}=router.query
+
+    console.log(params)
+
+    return <h1>Docs Home Page</h1>
+}
+
+export default Doc
+
+
+
+
+You have to understand that params is an array hence we call it like {params=[]}  to get what length in our array we want
+
+
+{
+    if (params.length===2){
+
+      return <h1>Viewing Docs of {params[0]} and {params[1]} </h1>
+
+    // call params if the length is 2 and call the two values inside our array
+
+
+    } else if(params.length===1) {
+
+        return <h1>Viewing Docs of {params[0]}</h1>
+
+        // call params if the length is 1 and call the first values inside our array
+    }
+
+
+
+    return <h1>Docs Home Page</h1>
+
+    // call if the length is neither one nor 2
+
+}
+
+
+
+
+
+
+NB::
+    IMPORTANT TO NOTE THAT WHEN WE CALL DOCS ALONE WITHOUT ANYTHING AFTER THAT IT WILL CATCH AN ERROR ON OUR SCREEN TO AVOID THAT WE JUST CALL PARAMS WITH TWO BRACKETS AND THE DOTS INSIDE THE BRACKETS
+    [[...params]].js
+
+
+
+
+
+
+
+
+  //////   LINK COMPONENT NAVIGATION  /////
+
+When we want to go to another page in our website by clicking a text we just import Link and call the link with a href
+
+ import Link from 'next/link'
+
+ function Home {
+   return (
+     <div>
+       Home
+       <Link href='/about'>About</Link>
+     </div>
+   )
+ }
+
+
+ When we want to make a request just inside our app we use Link tag but if we want to make a request outside our app and make a server request we use an anchor Tag
+
+
+
+
+
+
+  /////  NAVIGATING PROGRAMMATICALLY  ////
+
+For example you have a form in your application and when someone submits the form you want the user to be taken somewhere else
+
+That's simple using next Js
+
+1.)You make the form or button using JSX in our instance
+
+   <button onClick={handleClick}>submit</button>
+
+
+
+2.)Import useRouter as usual and add it to our function
+
+    import {useRouter} from 'next/router'
+
+   const router = useRouter
+
+
+
+3.)Use a built in method that comes with useRouter to navigate to another page
+
+   const handleClick = () =>{
+
+     router.push('/product')     // push is the built in method
+
+   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+To make a custom 404 page you just create component on your pages folder ccalled 404.js then you can add what text you want and style it yourself
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ////// PRE-RENDERING ///////
+
+By default, Next.js pre-renders every page.
+
+This means that Next.js generates HTML for each page in advance, instead of having it all done by client-side JavaScript. Pre-rendering can result in better performance and SEO.
+
+
+There are two types of pre-rendering
+
+1.Static Generation.
+
+2.Server-side rendering
+
+
+
+
+
+
+
+         ///////////  STATIC GENERATION  //////////
+
+A method of pre-rendering where the HTML pages are generated at build time.
+
+Next.js, by default, without any configuration,statically generates every page in our app when we build it for production.This allows the page to be cached by a CDN and indexed by a search engine.
+
+Static generation is the recommended method to pre-render pages whenever possible cause the page can be built once,cached by a CDN and served to the client almost instantly.
+
+Static generation is mostly used in EX:Blog Pages,e-commerce Product pages, documentation and marketing pages
+
+
+
+
+
+
+   ///////  STATIC GENERATION WITH DATA  //////
+
+We can fetch data ahead of time when statically generation HTML.
+
+When exporting a page component we can also export an async function called getStaticProps that runs at build time in production.
+
+In that function we can fetch data from an external source and pass to our app by props
+
+
+
+
+
+
+
+
+
+??????????? QUESTION
+
+?????????????? Fetch data from 'https://jsonplaceholder.typicode.com/users' and display the name and the email of the users in the screen using static generation
+
+????????? After fetching and displaying data on your screen write your code in the convention next js way by making a component folder
+
+
+
+
+
+
+
+
+-First we create a component in our pages folder called users
+
+
+
+
+
+
+
+-write some jsx of the function and export it
+
+
+function users({user}) {
+    return(
+        <h1>List of users</h1>
+    )
+}
+
+export default users
+
+
+
+
+
+
+
+
+
+-export the async functioncalled getStaticProps and fetch the data
+
+
+export async function getStaticProps() {
+    const response = await fetch('https://jsonplaceholder.typicode.com/users')
+    const data= await response.json()
+
+    console.log(data)
+
+    return{
+        props:{
+            user:data
+        }
+    }
+}
+
+
+
+
+
+
+-Pass the props on your main function as props as well and display it on your screen
+
+
+
+function users({user}) {
+    return(
+        <>
+        <h1>List of users</h1>
+
+            {
+                user.map((us)=>{
+                    return(
+                        <div key={us.id}>
+                            <p>{us.name}</p>
+                            <p>{us.email}</p>
+                        </div>
+                    )
+                })
+            }
+
+         </>
+    )
+
+
+}
+
+export default users
+
+export async function getStaticProps() {
+    const response = await fetch('https://jsonplaceholder.typicode.com/users')
+    const data= await response.json()
+
+    console.log(data)
+
+    return{
+        props:{
+            user:data
+        }
+    }
+}
+
+
+
+
+
+Ans:
+
+The above example isn't the convention way to write your js code instead you put the fetched data in another different component by making a new folder called component and passing in the jsx code.
+
+This helps the code to look neat and the new folder component unlike pages they don't need the special features that jsx provide mostly they are just there to make the code neat
+
+
+
+so we create a new folder called component in our application and inside there we create a new file called user
+
+function User({user}) {
+
+    return(
+        <>
+            <p>{user.name}</p>
+            <p>{user.email}</p>
+        </>
+    )
+
+}
+
+export default User
+
+
+pass in the necessary jsx and call it back to our main component in our pages folder with it's props
+
+
+function userList ({users}) {
+    return (
+        <>
+          <h1>List of Users</h1>
+            {
+                users.map((user)=>{
+                    return (
+                        <div key={user.id}>
+                           <User user={user}/>
+                        </div>
+                    )
+                })
+            }
+        </>
+    )
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+           //////////  getStaticProps    //////////////
+
+1.getStaticProps runs on the server side and never run on the client-side(browser) and the code will never be included in the JS bundle sent to the browser
+
+  Thats why when we run it we see it on the terminal and not on the console log
+
+2.getStaticProps is mainly used to write-code for server side that means querying a database or things like that
+
+
+3. getStaticProps props is only allowed in a page and not in a regular component file
+
+
+4. getStaticProps should return an object and object should contain a props key which is an object as well
+
+
+   export async function getStaticProps() {
+       const response = await fetch('https://jsonplaceholder.typicode.com/users')
+       const data= await response.json()
+
+       return{
+           props:{
+               user:data
+           }
+       }
+   }
+
+
+
+5.getStaticProps will run at build time and during development
+
+
+
+
+
+
+
+
+
+***********************
+NB:
+
+HTML file is always served when running your navigate to your page directly.
+
+Although there are instances where your HTML files will not be served this is when for example on your root component(index.js) you have a link that takes you to another page.When you click the link and navigate to the other page your HTML will not be fetched cause it was already fetched on your root component because of the Link Tag.
+
+
+This helps boosts the perfomance of our app.
+
+
+
+
+
+
+
+
+
+
+
+
+                /////////// getStaticPaths /////////////
+
+
+If a page has Dynamic Routes and uses getStaticProps, it needs to define a list of paths to be statically generated.
+
+When you export a function called getStaticPaths (Static Site Generation) from a page that uses dynamic routes, Next.js will statically pre-render all the paths specified by getStaticPaths.
+
+
+
+
+
+
+
+                  ???? QUESTION ???
+
+????????? Fetch data from ('https://jsonplaceholder.typicode.com/posts') and show the posts id and title and reduce the number of posts to 3
+
+
+?????? Make a new component in the posts folder and make it a dynamic route
+
+
+?????? After fetching data make sure the user can click any posts in localhost3000/post and take it to localhost3000/post/[postId] which shows each clicked posts it's title, and it's body
+
+
+????? Mostly in a real life application you get numerous posts.So instead of the three posts fetch all the posts possible and make sure a user can click any post and see it's title and body
+
+
+
+
+
+
+    *******  ANSWERS  ********
+
+
+
+
+*******
+
+function PostList ({posts}){
+  return(
+      <>
+          <h1>Blog of posts</h1>
+
+          {
+             posts.map((post)=>{
+                 return(
+                     <div key={post.id}>
+                         <Link href={`/posts/${post.id}`} passHref>
+                         <h3>{post.id}  {post.title}</h3>
+                         </Link>
+                          <hr/>
+                     </div>
+                 )
+             })
+          }
+      </>
+  )
+
+
+}
+
+
+export default PostList
+
+export async function getStaticProps() {
+    const response = await fetch('https://jsonplaceholder.typicode.com/posts')
+
+    const data = await response.json()
+
+    return {
+        props:{
+            posts:data.slice(0,3)
+        }
+    }
+}
+
+
+
+
+
+
+***********
+
+component  // pages/posts/[postId].js
+
+
+
+
+
+
+
+************
+
+// Generates `/posts/1`,`/posts/2`  and `/posts/3`
+export async function getStaticPaths() {
+  return {
+    paths: [{ params: { id: '1' } }, { params: { id: '2' } }, { params: { id: '2' } }],
+
+    fallback: false, // can also be true or 'blocking'
+  }
+}
+
+
+
+
+// `getStaticPaths` requires using `getStaticProps`
+
+export async function getStaticProps(context) {
+    const { params } = context
+     const response = await fetch(
+         `https://jsonplaceholder.typicode.com/posts/${params.postId}`
+     )
+     const data = await response.json()
+
+     return {
+         props:{
+             post : data
+         }
+     }
+}
+
+
+The getStaticPaths API reference covers all parameters and props that can be used with getStaticPaths.
+
+
+
+
+
+
+***********
+
+
+    export async function getStaticPaths() {
+
+
+   ////First we copy our code in localhost3000/post to get all the necessary posts we want
+
+       const response = await fetch('https://jsonplaceholder.typicode.com/posts')
+        const data = await response.json()
+
+
+
+   ////Make a new variable,map over the data we just received above and return an object
+
+        const paths=data.map(path=>{
+            return{
+                params:{
+                   postId:`${path.postId}`
+                }
+            }
+        })
+
+
+
+   /////// comment out the three posts and call the variable above using esLint 2015
+
+        return {
+            // paths:[
+            //     {
+            //       params:{postId : '1'}
+            //     },
+            //     {
+            //         params:{postId : '2'}
+            //     },
+            //     {
+            //         params:{postId : '3'}
+            //     },
+            // ],
+           paths,
+            fallback:false,
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+  ///////     getStaticPaths fallback:false   ////////////////
+
+1. The paths returned from getStaticPaths will be rendered to HTML at build time by getStaticProps.
+
+2.If fallback is set to false, then any paths not returned by getStaticPaths will result in a 404 page.
+
+  example:
+  we have urls of
+
+            localhost3000/1
+            localhost3000/2
+            localhost3000/3
+
+   When we go to localhost3000/4 it will bring an error cause we don't have that particular url
+
+
+
+
+       /////////   WHEN TO USE FALLBACK:FALSE   //////////
+
+The false value is more suitable if you have an application with a small number of paths to pre-render so as it becomes faster.
+
+it's also used when new pages are not added often cause getstaticPaths will render it at built time. This helps in faster load time and SEO.
+
+
+
+
+
+
+
+
+    ///////////   getStaticPaths fallback:true  ///////////
+
+1.The paths returned from getStaticPaths will be rendered to HTML at build tme by getStaticProps
+
+
+2.The Paths that have not been generated at build time will not result in a 404 page.Instead, Next.js will serve a 'fallback' version of the page on the first request to such a path.
+
+
+  -To show the path that hasn't been generated at build time
+
+    a.) import {useRouter} from "next/router";
+
+
+
+  -Then we call it inside our function
+
+     b.)
+           const router = useRouter()
+
+            if (router.isFallback) {
+                return <h1>Loading...</h1>
+            }
+
+
+
+3.In the background, Next.js will statically generate the requested path HTML and JSON. This includes running getStaticProps
+
+
+4.When that's done, the browser receives the JSON for the generated path. This will be used to automatically render the page with the required props. From the user's perspective, the page will be swapped from the fallback page to the full page.
+
+
+5.At the same time, Next.js keeps track of the new list of pre-rendered pages.Subsequent request(refreshing) to the same path will serve the generated page, just like other pages pre-rendered at build time.
+
+
+
+
+ ///// CHECKING IF CERTAIN ID'S ISN'T AMONG THE ID'S IN THE URL WE'VE FETCHED /// ///
+
+For example in the url where you just got your id's from there is a certain ID that isn.t there
+
+localhost3000/post/101 isn't among the urls and you want it to throw an error and you are using fallback to TRUE
+
+First you use an if statement to check if an ID is among the data you've fetched in the getStaticProps function
+
+
+export async function getStaticProps(context) {
+   const { params } = context
+    const response = await fetch(
+        `https://jsonplaceholder.typicode.com/posts/${params.postId}`
+    )
+    const data = await response.json()
+
+
+
+    if (!data.id){
+        return {            //// THIS CHECKS IF A CERTAIN URL ISN'T AVAILABLE
+            notFound:true,
+        }
+    }
+
+
+
+
+    return {
+        props:{
+            post : data
+        }
+    }
+
+}
+
+
+
+
+
+
+NB: The Link tag always prefetches the data for a certain path even before navigating to that path.So if you to that path you won't prefetch any new data.
+
+
+
+
+
+  //////////     WHEN TO USE FALLBACK:TRUE     ////////////
+
+1.) The fallback:true value is most suitable if your app has a very large number of static pages that depend on data EXAMPLE   : A large ecommerce site.
+
+2.) If you want all the products to pre-render and there are a few thousand of them build takes a lot of time.
+
+  So instead you statically generate a small subset of products that are popular and use fallback:true for the rest
+
+3.)When someone request a page that is not generated yet the user will the page with a loading indicator
+
+ shortly after, getStaticProps finishes and the page will be rendered with the requested data. From then onwards, everyone who requests the same page will get statically pre-rendered page
+
+
+
+
+
+
+  /////////   getStaticPaths fallback:'blocking'  ////////
+
+-This works just like fallback:true it's just that there is no flash of loading/fallback state.
+
+1.)The paths returned from getStaticPaths will be rendered to HTML at build time by getStaticProps.
+
+2.)The paths have not been generated at build time will not result in a 404 page. Instead, on the first request, Next.js will render the page on the server and return the generated HTML.
+
+3.)When that's done,the browser receives the HTML for the generated path.From the user's perspective,it will transition from 'the browser is requesting the page' to 'the full page is loaded'.There is no flash of loading/fallback state unlike fallback:true
+
+4.)At the same time,Next.js keeps track of the new list of pre-rendered pages.Subsequent requests to the same path will serve the generate page, just like other pages pre-rendered at build time.
+
+
+
+  //////////     WHEN TO USE fallback:'blocking'    ////////////
+
+On a UX level,sometimes,people want page to be loaded without a loading indicator if the wait time is a few mili seconds. This helps avoid the layout shift
+
+Some crawlers did not support JavaScript.The loading page would be rendered and then the full page would be loaded which was causing a problem.
+
+Nonetheless fallback:true is more recommended unless there is a problem we can use fallback:'blocking'
+
+
+
+
+
+
+
+
+
+
+***********************  NB  ***********************
+
+Static generation is good for building projects at build time cause HTML is pre-rendered instantly
+
+But there is an issue or two when it comes to static generation
+
+Since static generation is pre-rendered at built time and cached as well it makes it difficult when you have an ecommerce page or any other page that data is changed frequently.
+
+Since data is pre-rendered already when you change it for example on an ecommerce page you change the price the user won't see the change cause the data is cached already
+
+This also takes time cause to update something small you need to rebuild the entire app which isn't a good recommendation.
+
+
+So due to this next.js included a new feature called INCREMENTAL STATIC REGENERATION (ISR).
+
+
+
+
+
+     ///////////  INCREMENTAL STATIC REGENERATION ///////////
+
+Next.js allows you to create or update static pages after you’ve built your site. Incremental Static Regeneration (ISR) enables you to use static-generation on a per-page basis, without needing to rebuild the entire site. With ISR, you can retain the benefits of static while scaling to millions of pages.
+
+
+// This function gets called at build time on server-side.
+// It may be called again, on a serverless function, if
+// revalidation is enabled and a new request comes in
+export async function getStaticProps() {
+  const res = await fetch('https://.../posts')
+  const posts = await res.json()
+
+  return {
+    props: {
+      posts,
+    },
+    // Next.js will attempt to re-generate the page:
+    // - When a request comes in
+    // - At most once every 10 seconds
+    revalidate: 10, // In seconds
+  }
+}
+
+
+
+When a request is made to a page that was pre-rendered at build time, it will initially show the cached page.
+
+Any requests to the page after the initial request and before 10 seconds are also cached and instantaneous.
+
+After the 10-second window, the next request will still show the cached (stale) page
+
+Next.js triggers a regeneration of the page in the background.
+
+Once the page generates successfully, Next.js will invalidate the cache and show the updated page. If the background regeneration fails, the old page would still be unaltered.
+
+
+
+*************** NB *************************
+
+a re-generation is initiated only if a user makes a request after the revalidate time
+
+revalidate does not mean the page automatically re-generates after every 10 seconds.It simply denotes the time after which,if a user makes a request, a re-generation has to be initiated.
+
+The re-generation can also fail and the previously cached HTML could be served till the subsequent re-generations succeed
+
+
+
+
+  /////// PROBLEMS WITH STATIC GENERATIOM  ///////
+
+1.)We cannot fetch data at request time.
+   -With not being able to fetch data per request, we run into the problem of stale data.
+
+2.) We cannot fetch data that is user specific and pre-render that page
+
+
+
+
+
+
+          //////// SERVER-SIDE RENDERING (SSR) ///////////
+
+SSR is a form of pre-rendering where the HTML is generated at request time
+
+SSR is required when you need to fetch data per request and also when you need to fetch personalized data keeping in mind SEO
+
+In other words SSR fixes the problems we have above that is caused by static generation.
+
+Server side rendering however is slower than static generation as the server must compute the result in every request.
+
+
+
+    ////// getServerSideProps /////
+
+1.getServerSideProps runs only on the server side and the function will never run on the client side.
+  This means the code inside getServerSideProps won't even be included in the js bundle that is sent to the browser.
+
+2.You write server-side code directly in getServerSideProps
+
+3.getServerSide is allowed only in a page and cannot be run from a regular component file
+
+4.getServerSide should return an object and object should contain a props key which is an object.
+
+
+
+
+
+
+?????? QUESTION
+
+1.Make a db.json file which has the following code and make it run on localhost:8000
+
+  {
+    "news": [
+      {
+        "id": 1,
+        "title": "News Article 1",
+        "description": "Description 1",
+        "category": "sports"
+      },
+      {
+        "id": 2,
+        "title": "News Article 2",
+        "description": "Description 2",
+        "category": "Politics"
+      },
+      {
+        "id": 3,
+        "title": "News Article 3",
+        "description": "Description 3",
+        "category": "sports"
+      }
+    ]
+  }
+
+
+2.Create a folder called news and display the above db.json file on the browser using server side rendering.
+
+
+3.Make a dynamic component in the folder news and make it dynamic by if someone goes to a particular category in db.json to only show data of that particular category
+
+
+
+
+
+
+
+
+
+
+
+
+*****************  ANS  *******************
+
+
+1.
+   Step 1: To set up the JSON Server run the following command:
+
+   npm install -g json-server
+
+
+   Step 2: Create a db.json file with some data
+
+    {
+        "news": [
+          {
+            "id": 1,
+            "title": "News Article 1",
+            "description": "Description 1",
+            "category": "sports"
+          },
+          {
+            "id": 2,
+            "title": "News Article 2",
+            "description": "Description 2",
+            "category": "Politics"
+          },
+          {
+            "id": 3,
+            "title": "News Article 3",
+            "description": "Description 3",
+            "category": "sports"
+          }
+        ]
+      }
+
+
+      Step 3: Start JSON Server
+
+      npx  json-server --watch db.json --port 8000
+
+
+
+
+
+
+
+2.
+   function NewsArticleList({articles}){
+       return (
+           <>
+               <h1>News Article List</h1>
+               {
+                   articles.map(article=>{
+                       return(
+                           <div key={article.id}>
+                               <h2>
+                                   {article.id} {article.title} | {article.category}
+                               </h2>
+                           </div>
+                       )
+                   })
+               }
+           </>
+       )
+   }
+
+   export default NewsArticleList
+
+
+   export async function getServerSideProps() {
+       const response= await fetch('http://localhost:8000/news')
+       const data = await response.json()
+
+       return{
+           props:{
+               articles:data
+           }
+       }
+   }
+
+
+
+
+
+
+
+
+3.
+    function ArticleListByCategory ({articles,category}){
+       return(
+           <>
+               <h1>Article of {category}</h1>
+               {
+                   articles.map(article=>{
+                       return(
+                           <div key={article.id}>
+                               <h1>{article.id} {article.title} | {article.category}</h1>
+                               <p>{article.description}</p>
+                               <hr/>
+                           </div>
+                       )
+                   })
+               }
+           </>
+       )
+    }
+
+    export default ArticleListByCategory
+
+    export async function getServerSideProps(context){
+        const {params} = context
+        console.log(params)
+        const {category}=params
+        const response = await fetch(`http://localhost:8000/news?category=${category}`)
+        const data = await response.json()
+
+        return {
+            props:{
+                articles:data,
+                category
+            }
+        }
+    }
+
+
+NB:
+  -When making a paricular path to a category you should make the name of the component the same as the path you wanna go
+  for example ours is called [category].js cause we are going to a paricular category
+
+
+
+
+
+
+  /////// CLIENT-SIDE DATA FETCHING  /////////
+
+-If you are creating a site that is private,doesn't need SEO and it's user specific we use client side data fetching
+-Client side data fetching is just like how you fetch data when using a normal react app
+
+
+
+
+????????? QUESTION
+
+1.Make db.json file and add the following data on your db.json file and make it run on localhost:8000
+
+     "dashboard": {
+       "post": 5,
+       "likes": 100,
+       "following": 50,
+       "followers": 20
+     },
+
+2.Make a new component (dashboard.js) and Display the following data in db.json file on the browser and add two states that one checks for loading and the other one to set Data.Show the data on the first mount only.
+
+3.After displaying our data in dashboard.js make a new component and try a new method of client-side data fetching by installing swr and displaying the data on db.json on our browser with swr
+
+
+
+
+
+
+
+
+
+
+
+************ ANS *****************
+
+1.
+   Step 1: To set up the JSON Server run the following command:
+
+   npm install -g json-server
+
+
+   Step 2: Create a db.json file with some data
+
+        "dashboard": {
+          "post": 5,
+          "likes": 100,
+          "following": 50,
+          "followers": 20
+        },
+
+
+2.
+  import {useState,useEffect} from 'react'
+  function dashboard() {
+      const [isLoading,setLoading]=useState(true)
+      const [dashboardData,setData]=useState(null)
+
+      useEffect(()=>{
+         async function fetchDashboardData() {
+             const response = await fetch('http://localhost:8000/dashboard')
+             const data=await response.json()
+             setData(data)
+             setLoading(false)
+         }
+
+         fetchDashboardData()
+      },[])
+
+      if (isLoading){
+          return <h2>Loading</h2>
+      }
+
+      return (
+          <div>
+              <h2>Post {dashboardData.post}</h2>
+              <h2>likes {dashboardData.likes}</h2>
+              <h2>following {dashboardData.following}</h2>
+              <h2>followers {dashboardData.followers}</h2>
+          </div>
+      )
+  }
+
+  export default dashboard
+
+
+
+3.
+   First install swr
+
+   make a new component of dashboard.swr
+
+   import useSWR from 'swr'
+
+   const fetcher = async () =>{
+       const response =await fetch('http://localhost:8000/dashboard')
+       const data=await response.json()
+       return data
+   }
+
+   function DashboardSWR() {
+       const {data,error} = useSWR('dashboard',fetcher)
+
+       if (error) return'An error has occured'
+       if (!data) return 'Loading'
+
+       return (
+           <div>
+               <h2>Post {data.post}</h2>
+               <h2>likes {data.likes}</h2>
+               <h2>following {data.following}</h2>
+               <h2>followers {data.followers}</h2>
+           </div>
+       )
+   }
+
+   export default DashboardSWR
+
+
+
+
+
+
+
+
+*********************** client-side data fetching + pre rendering ****************
+
+folder 3 video 38
+
+
+
+
+
+
+
+
+
+
+
+
+           ///////////  API ROUTES  ///////////
+
+Next Js is a full stack framework.
+
+API routes allow you to create RESTful endpoints as part of your Next.js application folder structure.
+
+Within the pages folder, you need to create a folder called 'api'.
+
+Within that 'api' folder, you can define all the APIs for your application.
+
+You can add business logic without needing to write any additional custom server code and without having to configure any API routes.
+
+Next Js gives you everything you need to write full-stack React + Node applications.
+
+
+
+      ///// Creating an API request  ////
+
+To create an api request we add an api folder in our pages folder
+
+Then you create an index.js which export a default function
+
+   export default function handler(req,res) {
+       res.status(200).json({name:'Home API route'})
+   }
+
+The routes just works as a routes of a normal component.
+
+
+
+
+???????????? QUESTION
+
+1.Make a GET request to a folder inside our root project folder called Data that inside has a component of index.js and exports a variable with data of
+
+        export const comments = [
+            {
+                id:1,
+                text:'This is the first comment'
+            },
+            {
+                id:2,
+                text:'This is the second comment'
+            },
+            {
+                id:3,
+                text:'This is the third comment'
+            },
+        ]
+
+2.In our pages folder make another folder of an api that shows the data when you navigate to '/api/comments'
+
+3.Display the content in the screen where when someone clicks a button the data we get from our API folder is rendered onto our screen
+
+4.create an input field and a button which when clicked adds the input to our comments array
+
+
+
+
+
+
+
+*************************
+
+1.We just create a new folder in our app called data and add a component of comment.js and add the data above
+
+
+
+
+
+
+
+************************************************
+
+2.add a new component in our api folder called index.js
+
+import {comments} from "../../../data/comments";
+
+export default function handler(req,res) {
+    res.status(200).json(comments)
+}
+
+
+
+
+
+
+
+*************************************************
+
+3.
+      import {useState} from "react";
+
+      function CommentsSection() {
+          const [comments, setComments] = useState([])
+
+          const fetchComments = async () => {
+              const response = await axios.get('/api/comments')
+              setComments(response.data)
+          }
+
+          return (
+              <>
+                  <button onClick={fetchComments}>Show comments</button>
+                  {
+                      comments.map((comment) => {
+                          return (
+                              <div key={comment.id}>
+                                  <h1>{comment.id} {comment.text}</h1>
+                              </div>
+                          )
+                      })
+                  }
+              </>
+          )
+      }
+
+      export default CommentsSection
+
+
+
+********************
+
+we will now look at how to make post request to our api endpoint
+
+
+for our example, we're going to allow a user to submit a comment which will get stored in the comments array we have in the data folder
+
+
+in the comments page, we're going to allow a user to type in a comment and submit it
+
+
+we will create a new piece of state called comment
+
+const [comment, setComment] = useState("")
+
+in the jsx, we're going to add an input field and a button
+
+    <input type="text" value={comment} onChange={event => setComment(event.target.value)} />
+    <button onClick={onCommentSubmit} >Submit Comment</button>
+
+and this is our onCommentSubmit function
+
+    const onCommentSubmit = async () => {
+        await axios.post('/api/comments', {
+            text: comment
+        })
+    }
+
+
+we then need to handle our post request in our api route /api/comments/index
+
+
+we will need to update our code to support the different requests
+
+
+we can access the data passed from the form in comments api using req.body.namePassed, in our case, we passed the name as text so req.body.text
+
+
+we will add an id to this comment text to match the others then push it to the comments array
+
+
+export default function handler (req, res) {
+    if (req.method === "GET"){
+        res.status(200).json(comments)
+    } else if (req.method === "POST"){
+        const text = req.body.text
+        const comment = {
+            id: Date.now(),
+            text: text
+        }
+        comments.push(comment)
+        res.status(201).json(comments)
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+??????????? Add a dynamic api route where when we write a specific url  to a particular id it is displayed in the screen
+
+?????? Add a delete button in all comments where when you delete a particular comments it gets deleted
+
+
+
+
+**********************************
+
+A dynamic api route is the same as a dynamic page route where you add the component by putting [commentId].js
+
+
+
+So in our instance we'll add [commentId].js in our comments folder which is inside our api folder
+
+
+
+After that we import all of our comments from our data (database) folder and try to get a particular id
+
+import {comments} from "../../../data/comments";
+
+
+
+We default export our handler function to try get a particular Id
+
+export default function handler(req,res) {
+    const {commentId} = req.query
+    const comment = comments.find(comment=>comment.id === parseInt(commentId))
+    res.status(200).json(comment)
+}
+
+
+We parseInt the id cause it was a string
+
+
+
+
+
+***********************
+
+we will now look at how to implement the delete request. each of the comments will have a delete button which when clicked, will delete the comment from the array
+
+
+    <div key={comment.id}>
+        {comment.id} {comment.text}
+        <button onClick={() => deleteComment(comment.id)} >Delete</button>
+    </div>
+
+    in deleteComment, we will call fetchComments so that it can load the new comments again
+
+    const deleteComment = async(commentId) => {
+        await axios.delete(`/api/comments/${commentId}`)
+
+        fetchComments()
+    }
+
+
+in [commentId] api route, we will check for the delete request method
+
+import {comments} from "../../../data/comments";
+
+export default function handler(req,res) {
+    const {commentId} = req.query
+    if (req.method === 'GET'){
+        const comment = comments.find(comment=>comment.id === parseInt(commentId)
+        )
+        res.status(200).json(comment)
+    } else if (req.method === 'DELETE'){
+        const deletedComment = comments.find(comment=>comment.id === parseInt(commentId)
+        )
+
+        const index = comments.findIndex(comment=>comment.id===parseInt(commentId))
+
+         comments.splice(index,1)
+        res.status(200).json(deletedComment)
+    }
+
+}
+
+
+
+
+it is also possible to have a catch all API routes which is similar to the catch all for pages
+
+
+[...params].js catch all
+
+[[...params]].js is an optional catch all route
+
+
+
+
+
+
+
+
+    ////// API routing and Pre-rendering /////
+
+-We have our data and they already show in the screen but we want to prerender an id's as individual urls to do that we first
+
+ 1.Craete a dynamic route
+
+  [commentId].js
+
+ 2.Import the data from our API
+
+   import {comments} from "../../data/comments";
+
+ 3.We write some jsx we want to be pre-rendered
+
+   function CommentId({comment}) {
+       return(
+           <>
+               <h1>{comment.id} {comment.text}</h1>
+           </>
+   )
+   }
+
+   export default CommentId
+
+
+
+ 4.export an async getStaticPaths  function
+
+     export async function getStaticPaths() {
+         return{
+             paths:[
+                 {params:{commentId:'1'}},
+                 {params:{commentId:'2'}},
+                 {params:{commentId:'3'}}
+             ],
+             fallback:false
+         }
+     }
+
+
+ 5.export an async getStaticProps function
+
+      export async function getStaticProps(context) {
+          const {params} = context
+         const {commentId}=params
+
+          const comment = comments.find(comment=>comment.id===parseInt(commentId))
+
+          return{
+              props:{
+                  comment,
+              }
+          }
+      }
+
+
+  ************* NB  **************
+
+  Notice how we called comment in 5th method the same as how we call it in an api folder that saves us some time and since we have the data we don't need to request it
+
+  Also when we call it the normal way:
+
+         const response = await fetch('https://jsonplaceholder.typicode.com/posts')
+         const data = await response.json()
+
+   It will throw an error
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+??????QUESTION?????? create a new next project called styling. don't delete any file!
+??????QUESTION?????? create a route to about which displays and h2 saying about page
+??????QUESTION?????? add a global style to make all h2 tags green
+??????QUESTION?????? add bootstrap to your project and in about page create a primary button from bootstrap
+
+
+
+
+
+
+
+
+
+
+
+
+
+/////////////////////////////////////////////
+STYLING
+/////////////////////////////////////////////
+
+
+we're going to look at
+
+1. global styles
+2. component styles
+3. SASS or SCSS
+4. css-in-js solution
+
+
+create a new project called styling
+
+create-next-app gives us most of the global styles that we require
+
+
+inside styles folder, there is a global.css file which contain some basic stylings necessary for our app
+
+
+this file is imported in _app.js
+
+
+this is key to note as in order to create global stylings, we need to import it in _app.js inside pages
+
+
+apart from writing your own styles, you may also have a need to import a stylesheet from another library e.g. bootstrap
+
+
+we will first need to npm install bootstrap to our project. the command for the current latest version is
+
+~ npm i bootstrap@5.2.0-beta1
+
+
+we will then import the css file
+
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+Importing JS is not easy as CSS. If we directly import JS like CSS we will run into error which would say window and document is not defined. This is because window and document are client side objects, while Next.js renders HTML on Client side as well as server side. Hence to avoid such errors we will dynamically import JS using useEffect() hook.
+
+function MyApp({ Component, pageProps }) {
+  useEffect(() => {
+    import("bootstrap/dist/js/bootstrap.min");
+  }, [])
+  return <Component {...pageProps} />
+}
+
+
+to test this, we will create an about page where we will create a bootstrap button. the bootstrap styling should show
+
+    <button className="btn btn-primary">About page</button>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+??????QUESTION?????? create a component level stylesheet for the about page which contains a container that turns the background to red. use this to make the background of the about page red
+
+
+
+
+
+
+
+
+
+
+
+
+
+we will now look at component level styling
+
+
+next js supports css modules (locally scoped css) using a filename.module.css naming convention
+
+
+in the styles folder, we can see a file name Home.modules.css these styles only apply to the root index.js page
+
+
+in order to use these classes, we import them in the js file that we want to use
+
+
+Home.modules.css has a class container, in order to access this we will use the format below
+
+
+import styles from '../styles/Home.module.css'
+...
+<div className={styles.container}>
+
+
+
+we will now create a component level stylesheet for the about page which contains a container that turns the background to red
+
+
+in styles create About.module.css
+
+.container{
+    background-color: red;
+}
+
+
+pages/about.js
+
+import styles from "../styles/About.module.css"
+
+function About() {
+    return(
+        <div className={styles.container}>
+            <button className="btn btn-primary">About page</button>
+        </div>
+    )
+}
+
+
+
+
+
+
+
+
+
+??????QUESTION?????? change the background color of the about page to purple using scss
+??????QUESTION?????? in about, create an h3 tag and use inline styling to make its text color blue
+
+
+
+
+
+
+
+
+
+
+
+
+next js also supports SASS/SCSS
+
+
+the first thing is to install sass
+
+~ npm i sass
+
+
+in styles create a partial _colors.scss where we will define the colors for our app
+
+
+$orange: orange;
+
+
+in styles also create About.module.scss where we will import colors attempt to create a new class for the background color
+
+@import "colors";
+
+.containerscss{
+  background-color: $orange;
+}
+
+
+
+/pages/about
+
+import styles from "../styles/About.module.scss"
+
+function About() {
+    return(
+        <div className={styles.containerscss}>
+            <button className="btn btn-primary">About page</button>
+        </div>
+    )
+}
+
+
+
+we will now look at css in js. the simplest for of css in js is inline styling in a component jsx
+
+
+about.js
+
+
+<h3 style={{color: "blue"}}>Inline styling</h3>
+
+
+although inline styling work, they're not the go to approach. you might prefer something like styled-components or emotion
+
+
+
